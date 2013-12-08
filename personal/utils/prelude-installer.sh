@@ -5,7 +5,7 @@
 # Version:
 # Last-Updated:
 #           By:
-#     Update #: 7
+#     Update #: 10
 #
 
 # Change Log:
@@ -227,7 +227,6 @@ then
         # Replace existing config
         install_prelude
         make_prelude_dirs
-        install_cedet
     else
         # Install into existing config
         PRELUDE_INSTALL_DIR="$PRELUDE_INSTALL_DIR/prelude"
@@ -245,8 +244,8 @@ else
     # Nothing yet so just install prelude
     install_prelude
     make_prelude_dirs
-    cp "$PRELUDE_INSTALL_DIR/sample/prelude-modules.el" "$PRELUDE_INSTALL_DIR"
-    rm -rf "$PRELUDE_INSTALL_DIR/sample"
+    printf " Installing cedet.\n"
+    install_cedet
 fi
 
 if [ -z $PRELUDE_SKIP_BC ];
