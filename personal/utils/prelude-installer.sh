@@ -5,7 +5,7 @@
 # Version:
 # Last-Updated:
 #           By:
-#     Update #: 6
+#     Update #: 7
 #
 
 # Change Log:
@@ -141,6 +141,8 @@ do
             ;;
     esac
 done
+
+colors
 
 VERBOSE_COLOR=$BBLUE
 
