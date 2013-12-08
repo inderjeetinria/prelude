@@ -115,12 +115,12 @@ This functions should be added to the hooks of major modes for programming."
 
 (defun prelude-prog-mode-defaults ()
   "Default coding hook, useful with any programming language."
-  (when (and (executable-find ispell-program-name)
-             prelude-flyspell)
-    (flyspell-prog-mode))
-  (when prelude-guru
-    (guru-mode +1))
-  (smartparens-mode +1)
+  ;; (when (and (executable-find ispell-program-name)
+  ;;            prelude-flyspell)
+  ;;   (flyspell-prog-mode))
+  ;; (when prelude-guru
+  ;;   (guru-mode +1))
+  ;; (smartparens-mode +1)
   (prelude-enable-whitespace)
   (prelude-local-comment-auto-fill)
   (prelude-font-lock-comment-annotations))
@@ -131,9 +131,9 @@ This functions should be added to the hooks of major modes for programming."
                             (run-hooks 'prelude-prog-mode-hook)))
 
 ;; enable on-the-fly syntax checking
-(if (fboundp 'global-flycheck-mode)
-    (global-flycheck-mode +1)
-  (add-hook 'prog-mode-hook 'flycheck-mode))
+;; (if (fboundp 'global-flycheck-mode)
+;;     (global-flycheck-mode +1)
+;;   (add-hook 'prog-mode-hook 'flycheck-mode))
 
 (provide 'prelude-programming)
 ;;; prelude-programming.el ends here

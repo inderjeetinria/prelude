@@ -48,7 +48,7 @@
     guru-mode projectile
     magit move-text rainbow-mode
     smartparens undo-tree
-    volatile-highlights zenburn-theme)
+    volatile-highlights)
   "A list of packages to ensure are installed at launch.")
 
 (defun prelude-packages-installed-p ()
