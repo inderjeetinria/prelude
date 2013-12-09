@@ -5,7 +5,7 @@
 ;; Version:
 ;; Last-Updated:
 ;;           By:
-;;     Update #: 134
+;;     Update #: 203
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
@@ -23,32 +23,41 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load-file (concat prelude-personal-cedet-dir "/common/cedet.el"))
+(load-file (concat prelude-personal-cedet-dir "/cedet-devel-load.el"))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode)
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode)
+(add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode)
+(add-to-list 'semantic-default-submodes 'global-semantic-highlight-edits-mode)
+(add-to-list 'semantic-default-submodes 'global-semantic-show-parser-state-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Semantic requirements
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (require 'eassist)
 
-(require 'eieio)
-(require 'eieio-opt)
-
 (require 'semantic)
-(require 'semantic-ia)
-(require 'semantic-clang)
-(require 'semantic-gcc)
-(require 'semantic-decorate-include)
-(require 'semanticdb-global)
+(require 'semantic/ia)
+(require 'semantic/bovine/c)
+(require 'semantic/bovine/clang)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Semantic helpers
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(semantic-mode 1)
+
+;; (semantic-load-enable-code-helpers)
 (semantic-load-enable-excessive-code-helpers)
 
 (global-semantic-idle-completions-mode)
+(global-semantic-idle-scheduler-mode)
+(global-semantic-idle-summary-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Semantic GNU setup
@@ -81,7 +90,7 @@
 (defun alexott/c-mode-cedet-hook ()
   (local-set-key "." 'semantic-complete-self-insert)
   (local-set-key ">" 'semantic-complete-self-insert)
-  (local-set-key "\C-ct" 'eassist-switch-h-cpp)
+  (local-set-key "\C-cz" 'eassist-switch-h-cpp)
   (local-set-key "\C-xt" 'eassist-switch-h-cpp)
   (local-set-key "\C-ce" 'eassist-list-methods)
   (local-set-key "\C-c\C-r" 'semantic-symref))
@@ -92,16 +101,48 @@
 ;; Semantic Qt setup
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun jwintz/qt-mode-cedet-hook-layer (dir)
+  "Add all header files in DIR to `semanticdb-implied-include-tags'."
+  (let ((files (directory-files dir t "^.+\\.h[hp]*$" t)))
+    (defvar-mode-local c++-mode semanticdb-implied-include-tags
+      (mapcar (lambda (header)
+                (semantic-tag-new-include
+                 header
+                 nil
+                 :filename header))
+              files))))
+
 (defun jwintz/qt-mode-cedet-hook ()
   (setq qt-base-dir "~/Development/qt/5.2.0-rc1/clang_64/lib")
-  (semantic-add-system-include (concat qt-base-dir "/QtGui.framework/Headers") 'c++-mode)
+
   (semantic-add-system-include (concat qt-base-dir "/QtCore.framework/Headers") 'c++-mode)
-  (semantic-add-system-include (concat qt-base-dir "/QtTest.framework/Headers") 'c++-mode)
+  (semantic-add-system-include (concat qt-base-dir "/QtDeclarative.framework/Headers") 'c++-mode)
+  (semantic-add-system-include (concat qt-base-dir "/QtGui.framework/Headers") 'c++-mode)
   (semantic-add-system-include (concat qt-base-dir "/QtNetwork.framework/Headers") 'c++-mode)
+  (semantic-add-system-include (concat qt-base-dir "/QtOpenGL.framework/Headers") 'c++-mode)
+  (semantic-add-system-include (concat qt-base-dir "/QtQml.framework/Headers") 'c++-mode)
+  (semantic-add-system-include (concat qt-base-dir "/QtQuick.framework/Headers") 'c++-mode)
+  (semantic-add-system-include (concat qt-base-dir "/QtTest.framework/Headers") 'c++-mode)
+  (semantic-add-system-include (concat qt-base-dir "/QtWidgets.framework/Headers") 'c++-mode)
+  (semantic-add-system-include (concat qt-base-dir "/QtXml.framework/Headers") 'c++-mode)
+
   (add-to-list 'auto-mode-alist (cons qt-base-dir 'c++-mode))
+
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtCore.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtDeclarative.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtGui.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtNetwork.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtOpenGL.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtQml.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtQuick.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtTest.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtWidgets.framework/Headers"))
+  (jwintz/qt-mode-cedet-hook-layer (concat qt-base-dir "/QtXml.framework/Headers"))
+
   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt-base-dir "/QtCore.framework/qconfig.h"))
   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt-base-dir "/QtCore.framework/qconfig-large.h"))
   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt-base-dir "/QtCore.framework/qglobal.h"))
+
   (setq c-protection-key (concat "\\<\\(public\\|public slot\\|protected"
                                  "\\|protected slot\\|private\\|private slot"
                                  "\\)\\>")

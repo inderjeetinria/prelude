@@ -5,7 +5,7 @@
 ;; Version:
 ;; Last-Updated:
 ;;           By:
-;;     Update #: 11
+;;     Update #: 14
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
@@ -17,6 +17,7 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (prelude-require-package 'header2)
+(prelude-require-package 'sublimity)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Add prelude directory definitions
@@ -109,3 +110,13 @@
            (error (condition-case nil
                       (set-default-font "Monaco Regular 11")
                     (error nil))))))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Sublimity scrolling
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(when (display-graphic-p)
+  (require 'sublimity)
+  (require 'sublimity-scroll)
+  (require 'sublimity-map)
+  (sublimity-global-mode))
