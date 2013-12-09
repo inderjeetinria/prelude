@@ -5,7 +5,7 @@
 # Version:
 # Last-Updated:
 #           By:
-#     Update #: 10
+#     Update #: 17
 #
 
 # Change Log:
@@ -20,8 +20,10 @@ install_prelude () {
     else
         /usr/bin/env git clone $PRELUDE_URL "$PRELUDE_INSTALL_DIR" > /dev/null
         cd .emacs.d
+        printf " Setting up mainline.\n$RESET"
         git remote add mainline https://github.com/bbatsov/prelude.git
         git fetch mainline
+        printf " Branching mainline.\n$RESET"
         git branch mainline mainline/master
     fi
     if ! [ $? -eq 0 ]
@@ -39,10 +41,11 @@ make_prelude_dirs () {
 }
 
 install_cedet () {
-    printf " Installing CEDET.\n$RESET"
+    printf " Installing cedet.\n$RESET"
     cd "$PRELUDE_INSTALL_DIR/personal"
     /usr/bin/env bzr checkout bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk cedet
     cd cedet
+    printf " Bytecompiling cedet.\n$RESET"
     make
 }
 
@@ -244,7 +247,6 @@ else
     # Nothing yet so just install prelude
     install_prelude
     make_prelude_dirs
-    printf " Installing cedet.\n"
     install_cedet
 fi
 
