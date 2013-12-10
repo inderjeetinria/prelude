@@ -5,7 +5,7 @@
 ;; Version:
 ;; Last-Updated:
 ;;           By:
-;;     Update #: 35
+;;     Update #: 37
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
@@ -128,3 +128,9 @@
 (add-hook 'text-mode-hook 'jwintz/sublimity-hook)
 (add-hook 'c-mode-common-hook 'jwintz/sublimity-hook)
 (add-hook 'emacs-lisp-mode-hook 'jwintz/sublimity-hook)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Turn off bell
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq ring-bell-function 'ignore)
