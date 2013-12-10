@@ -5,7 +5,7 @@
 # Version:
 # Last-Updated:
 #           By:
-#     Update #: 17
+#     Update #: 19
 #
 
 # Change Log:
@@ -43,7 +43,7 @@ make_prelude_dirs () {
 install_cedet () {
     printf " Installing cedet.\n$RESET"
     cd "$PRELUDE_INSTALL_DIR/personal"
-    /usr/bin/env bzr checkout bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk cedet
+    /usr/bin/env git clone http://git.randomsample.de/cedet.git cedet
     cd cedet
     printf " Bytecompiling cedet.\n$RESET"
     make
@@ -181,15 +181,6 @@ fi
 ### Check dependencies
 printf  "$CYAN Checking to see if git is installed... $RESET"
 if hash git 2>&-
-then
-    printf "$GREEN found.$RESET\n"
-else
-    printf "$RED not found. Aborting installation!$RESET\n"
-    exit 1
-fi;
-
-printf  "$CYAN Checking to see if bzr is installed... $RESET"
-if hash bzr 2>&-
 then
     printf "$GREEN found.$RESET\n"
 else

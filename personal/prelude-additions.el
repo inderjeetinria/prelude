@@ -5,7 +5,7 @@
 ;; Version:
 ;; Last-Updated:
 ;;           By:
-;;     Update #: 14
+;;     Update #: 35
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
@@ -118,5 +118,13 @@
 (when (display-graphic-p)
   (require 'sublimity)
   (require 'sublimity-scroll)
-  (require 'sublimity-map)
-  (sublimity-global-mode))
+  (require 'sublimity-map))
+
+(defun jwintz/sublimity-hook ()
+  (when (display-graphic-p)
+    (sublimity-mode)))
+
+
+(add-hook 'text-mode-hook 'jwintz/sublimity-hook)
+(add-hook 'c-mode-common-hook 'jwintz/sublimity-hook)
+(add-hook 'emacs-lisp-mode-hook 'jwintz/sublimity-hook)
