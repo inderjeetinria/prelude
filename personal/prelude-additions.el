@@ -5,12 +5,50 @@
 ;; Version:
 ;; Last-Updated:
 ;;           By:
-;;     Update #: 37
+;;     Update #: 57
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar prelude-personal-packages-dir (expand-file-name "packages" prelude-personal-dir) "")
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Update load paths
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path prelude-personal-packages-dir)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Cmake
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'cmake-mode)
+(require 'cmake-project)
+
+(setq auto-mode-alist
+      (append '(("CMakeLists\\.txt\\'" . cmake-mode)
+                ("\\.cmake\\'" . cmake-mode)
+                ("\\.cmake.in\\'" . cmake-mode))
+              auto-mode-alist))
+
+(defun alamaison/maybe-cmake-project-hook ()
+  (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
+
+(add-hook 'c-mode-hook 'alamaison/maybe-cmake-project-hook)
+(add-hook 'c++-mode-hook 'alamaison/maybe-cmake-project-hook)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Qt
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'qt-pro)
+(require 'qt-qml)
+
+(add-to-list 'auto-mode-alist '("\\.pr[io]$" . qt-pro-mode))
+(add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Download additional MELPA packages
