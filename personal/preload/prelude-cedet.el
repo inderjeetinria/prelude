@@ -1,16 +1,20 @@
-;;; prelude-preload.el ---
+;;; prelude-cedet.el ---
 ;;
 ;; Author: Julien Wintz
 ;; Created: Mon Dec  9 13:02:20 2013 (+0100)
 ;; Version:
 ;; Last-Updated:
 ;;           By:
-;;     Update #: 203
+;;     Update #: 204
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(unless (featurep 'cedet-devel-load)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar prelude-personal-cedet-dir (expand-file-name "cedet" prelude-personal-dir) "")
 
@@ -170,3 +174,7 @@
 
 (unless (boundp 'x-max-tooltip-size)
   (setq x-max-tooltip-size '(80 . 40)))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+)
