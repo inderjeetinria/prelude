@@ -5,7 +5,7 @@
 ;; Version:
 ;; Last-Updated:
 ;;           By:
-;;     Update #: 204
+;;     Update #: 210
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Change Log:
@@ -35,9 +35,9 @@
 
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode)
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode)
-(add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode)
-(add-to-list 'semantic-default-submodes 'global-semantic-highlight-edits-mode)
-(add-to-list 'semantic-default-submodes 'global-semantic-show-parser-state-mode)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-highlight-edits-mode)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-show-parser-state-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Semantic requirements
@@ -57,11 +57,11 @@
 (semantic-mode 1)
 
 ;; (semantic-load-enable-code-helpers)
-(semantic-load-enable-excessive-code-helpers)
+;; (semantic-load-enable-excessive-code-helpers)
 
 (global-semantic-idle-completions-mode)
-(global-semantic-idle-scheduler-mode)
-(global-semantic-idle-summary-mode)
+;; (global-semantic-idle-scheduler-mode)
+;; (global-semantic-idle-summary-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Semantic GNU setup
@@ -117,7 +117,7 @@
               files))))
 
 (defun jwintz/qt-mode-cedet-hook ()
-  (setq qt-base-dir "~/Development/qt/5.2.0-rc1/clang_64/lib")
+  (setq qt-base-dir "~/Development/qt/5.2.0/clang_64/lib")
 
   (semantic-add-system-include (concat qt-base-dir "/QtCore.framework/Headers") 'c++-mode)
   (semantic-add-system-include (concat qt-base-dir "/QtDeclarative.framework/Headers") 'c++-mode)
